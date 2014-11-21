@@ -23,6 +23,7 @@ class PlayState1 extends FlxState
 	var _waterMov: Int =0;
 	var _waterDes : Int = 0;
 	var _pj : FlxSprite;/*150x100*/
+	var _lasers : Array<FlxSprite>=[];
 	
 	override public function create():Void
 	{
@@ -39,7 +40,6 @@ class PlayState1 extends FlxState
 		_water = new FlxSprite(0, FlxG.height / 2 + FlxG.height / 3);
 		_water.makeGraphic(FlxG.width,Std.int(FlxG.height/5),FlxColor.BLUE);
 		add(_water);
-		
 		
 		
 	}
@@ -59,6 +59,27 @@ class PlayState1 extends FlxState
 	override public function update():Void
 	{
 		super.update();
+		
+		/*Laseres*/
+		
+		if (FlxG.keys.anyJustPressed(["SPACE"])) {/*Disparo un laser*/
+			var _laser = new FlxSprite(_pj.x + _pj.width / 2 + _pj.width / 4, _pj.y + _pj.height/4);/*creo el sprite*/
+			_laser.makeGraphic(50,2,FlxColor.FOREST_GREEN);/*Cargo el grafico*/
+			add(_laser);/*Lo añado*/
+			_lasers.push(_laser);/*lo añado al array*/
+		}
+		
+		/*Movimiento laseres*/
+		
+		for (_aux  in _lasers) {
+			_aux.velocity.x = 500;
+			if (!_aux.isOnScreen()) {
+				remove(_aux);
+				_lasers.remove(_aux);
+			}
+		}
+		
+		/*Movimiento agua*/
 		
 		if (_waterMov==0) {
 			_water.y += 1;
