@@ -31,8 +31,24 @@ class ApplicationMain {
 		types.push (AssetType.TEXT);
 		
 		
+		urls.push ("assets/images/Fondo1.png");
+		types.push (AssetType.IMAGE);
+		
+		
 		urls.push ("assets/images/images-go-here.txt");
 		types.push (AssetType.TEXT);
+		
+		
+		urls.push ("assets/images/Olas1.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/music/Corncob.mp3");
+		types.push (AssetType.MUSIC);
+		
+		
+		urls.push ("assets/music/Level1BG.mp3");
+		types.push (AssetType.MUSIC);
 		
 		
 		urls.push ("assets/music/music-goes-here.txt");

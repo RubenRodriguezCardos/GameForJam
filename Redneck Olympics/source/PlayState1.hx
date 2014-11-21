@@ -7,6 +7,7 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import flixel.util.FlxColor;
+import flixel.system.FlxSound;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -23,25 +24,28 @@ class PlayState1 extends FlxState
 	var _waterMov: Int =0;
 	var _waterDes : Int = 0;
 	var _pj : FlxSprite;/*150x100*/
-	var _lasers : Array<FlxSprite>=[];
+	var _lasers : Array<FlxSprite> = [];
+	var _enemies : Array<FlxSprite> = [];
+	var _bgMusic : FlxSound;
 	
 	override public function create():Void
 	{
 		super.create();
 		
 		_bg = new FlxSprite(0, 0);
-		_bg.makeGraphic(FlxG.width, FlxG.height, FlxColor.AQUAMARINE);
+		_bg.loadGraphic("assets/images/Fondo1.png");
 		add(_bg);
 		
 		_pj = new FlxSprite(FlxG.width / 10, FlxG.height / 2 + FlxG.height / 3 - 85);
 		_pj.makeGraphic(150,100,FlxColor.YELLOW);
 		add(_pj);
 		
-		_water = new FlxSprite(0, FlxG.height / 2 + FlxG.height / 3);
-		_water.makeGraphic(FlxG.width,Std.int(FlxG.height/5),FlxColor.BLUE);
+		_water = new FlxSprite(0,0);
+		_water.loadGraphic("assets/images/Olas1.png");
 		add(_water);
-		
-		
+	
+		_bgMusic = FlxG.sound.load("assets/music/Level1BG.mp3");
+		_bgMusic.play();
 	}
 	
 	/**
