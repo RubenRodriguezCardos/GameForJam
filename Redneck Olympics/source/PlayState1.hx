@@ -36,8 +36,10 @@ class PlayState1 extends FlxState
 		_bg.loadGraphic("assets/images/Fondo1.png");
 		add(_bg);
 		
-		_pj = new FlxSprite(FlxG.width / 10, FlxG.height / 2 + FlxG.height / 3 - 85);
-		_pj.makeGraphic(150,100,FlxColor.YELLOW);
+		//He cambiado donde debe aparecer el pato y a mí si me lo carga
+		_pj = new FlxSprite(FlxG.width / 10, FlxG.height / 2 + FlxG.height / 3 - 150);
+		//_pj.makeGraphic(150,100,FlxColor.YELLOW);
+		_pj.loadGraphic("assets/images/Pato1.png");
 		add(_pj);
 		
 		_water = new FlxSprite(0,0);
