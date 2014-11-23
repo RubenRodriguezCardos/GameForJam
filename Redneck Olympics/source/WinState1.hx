@@ -6,7 +6,6 @@ import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
-import flixel.system.FlxSound;
 
 /**
  * A FlxState which can be used for the game's menu.
@@ -18,7 +17,6 @@ class WinState1 extends FlxState
      */
     
     var _bg : FlxSprite;
-    var _bgMusic : FlxSound;
     
     override public function create():Void
     {
@@ -28,8 +26,7 @@ class WinState1 extends FlxState
         _bg.loadGraphic("assets/images/Win1.png");
         add(_bg);
 
-        _bgMusic = FlxG.sound.load("assets/music/Menu.mp3");
-        _bgMusic.play();
+        FlxG.sound.playMusic("assets/music/Menu.mp3",1,true);
 
         haxe.Timer.delay(changeMenu, 3000);
     }
@@ -41,6 +38,7 @@ class WinState1 extends FlxState
     override public function destroy():Void
     {
         super.destroy();
+        FlxG.sound.destroy(true);
     }
 
     /**

@@ -18,7 +18,7 @@ class LoseState1 extends FlxState
      */
     
     var _bg : FlxSprite;
-    var _bgMusic : FlxSound;
+    var _lose : FlxSound;
     
     override public function create():Void
     {
@@ -28,8 +28,10 @@ class LoseState1 extends FlxState
         _bg.loadGraphic("assets/images/Lose1.png");
         add(_bg);
 
-        _bgMusic = FlxG.sound.load("assets/music/Menu.mp3");
-        _bgMusic.play();
+        _lose = FlxG.sound.load("assets/sounds/Lose.mp3");
+        _lose.play();
+
+        FlxG.sound.playMusic("assets/music/Menu.mp3",1,true);
 
         haxe.Timer.delay(changeMenu, 3000);
     }
@@ -41,6 +43,7 @@ class LoseState1 extends FlxState
     override public function destroy():Void
     {
         super.destroy();
+        FlxG.sound.destroy(true);
     }
 
     /**

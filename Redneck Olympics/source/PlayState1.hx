@@ -7,9 +7,9 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import flixel.util.FlxColor;
-import flixel.system.FlxSound;
 import flixel.util.FlxPoint;
 import flixel.util.FlxCollision;
+import flixel.system.FlxSound;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -29,11 +29,12 @@ class PlayState1 extends FlxState
 	var _pj : FlxSprite;/*150x100*/
 	var _lasers : Array<FlxSprite> = [];
 	var _enemies : Array<FlxSprite> = [];
-	var _bgMusic : FlxSound;
 	var speed : Int = -2; 
 	var puntuacion: Int = 0;
 	var _txtPun :FlxText;
 	var _play : Bool = false;
+	var _laserSound : FlxSound;
+	var _hurt : FlxSound;
 	
 	override public function create():Void
 	{
@@ -54,8 +55,7 @@ class PlayState1 extends FlxState
 		_water.scrollFactor.add(0.6);
 		add(_water);
 	
-		_bgMusic = FlxG.sound.load("assets/music/Level1BG.mp3");
-		_bgMusic.play();
+		FlxG.sound.playMusic("assets/music/Level1BG.mp3",1,true);
 
 		_txtPun = new FlxText(0,0,0,"Score: "+Std.string(puntuacion),12);
 		add(_txtPun);
@@ -63,6 +63,9 @@ class PlayState1 extends FlxState
 		_inst = new FlxSprite(0, 0);
 		_inst.loadGraphic("assets/images/Level1Int.png");
 		add(_inst);
+
+		_laserSound = FlxG.sound.load("assets/sounds/Laser.mp3");
+		_hurt = FlxG.sound.load("assets/sounds/Hurt.mp3");
 	}
 	
 	/**
@@ -72,6 +75,7 @@ class PlayState1 extends FlxState
 	override public function destroy():Void
 	{
 		super.destroy();
+		FlxG.sound.destroy(true);
 	}
 
 	/**
@@ -96,6 +100,7 @@ class PlayState1 extends FlxState
 				_laser.makeGraphic(50,2,FlxColor.FOREST_GREEN);/*Cargo el grafico*/
 				add(_laser);/*Lo añado*/
 				_lasers.push(_laser);/*lo añado al array*/
+				_laserSound.play();
 			}
 			
 			/*Movimiento laseres*/
@@ -135,6 +140,7 @@ class PlayState1 extends FlxState
 				for ( en in _enemies) {
 					
 					if (FlxG.collide(las,en)) {
+						_hurt.play();
 						remove(en);
 						remove(las);
 						_lasers.remove(las);
@@ -173,7 +179,7 @@ class PlayState1 extends FlxState
 				}
 			}
 
-			if (puntuacion > 200) {
+			if (puntuacion >= 200) {
 				FlxG.switchState(new WinState1());
 			}
 		}

@@ -10,6 +10,7 @@ import flixel.util.FlxColor;
 import flixel.system.FlxSound;
 import flixel.util.FlxPoint;
 import flixel.util.FlxCollision;
+import flixel.system.FlxSound;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -30,7 +31,13 @@ class PlayState2 extends FlxState
     var puntuacion: Int = 0;
     var _txtPun :FlxText;
     var _play : Bool = false;
-    
+    var _A : FlxSound;
+    var _S : FlxSound;
+    var _D : FlxSound;
+    var _F : FlxSound;
+    var _bad : FlxSound;
+    var _vida : Int = 3;
+
     override public function create():Void
     {
         super.create();
@@ -50,6 +57,15 @@ class PlayState2 extends FlxState
         _inst = new FlxSprite(0, 0);
         _inst.loadGraphic("assets/images/Level2Int.png");
         add(_inst);
+
+        FlxG.sound.playMusic("assets/music/Level2BG.mp3",0.5,true);
+
+        _A = FlxG.sound.load("assets/sounds/A.mp3");
+        _S = FlxG.sound.load("assets/sounds/S.mp3");
+        _D = FlxG.sound.load("assets/sounds/D.mp3");
+        _F = FlxG.sound.load("assets/sounds/F.mp3");
+        _bad = FlxG.sound.load("assets/sounds/Bad.mp3");
+
     }
     
     /**
@@ -118,8 +134,20 @@ class PlayState2 extends FlxState
             // }
 
             /*Colision notas y aciertos*/
+            // Si se sale fuera
+            if (_notes.length !=0 && _notes[0].x <= 0) {
+                remove(_notes[0]);
+                _notes.remove(_notes[0]);
+                _letters.remove(_letters[0]);
+                _bad.play();
+                puntuacion -= 1;
+                _vida -= 1;
+                _txtPun.text = "Score: " + Std.string(puntuacion);
+            }
+            // Si está tocando
             if (FlxG.overlap(_box, _notes[0])) {
                 if (FlxG.keys.anyJustPressed(["A"]) && _letters[0]=="A") {
+                    _A.play();
                     remove(_notes[0]);
                     _notes.remove(_notes[0]);
                     _letters.remove(_letters[0]);
@@ -127,6 +155,7 @@ class PlayState2 extends FlxState
                     _txtPun.text = "Score: " + Std.string(puntuacion);
                 }
                 else  if (FlxG.keys.anyJustPressed(["S"]) && _letters[0]=="S") {
+                    _S.play();
                     remove(_notes[0]);
                     _notes.remove(_notes[0]);
                     _letters.remove(_letters[0]);
@@ -134,6 +163,7 @@ class PlayState2 extends FlxState
                     _txtPun.text = "Score: " + Std.string(puntuacion);
                 }
                 else  if (FlxG.keys.anyJustPressed(["D"]) && _letters[0]=="D") {
+                    _D.play();
                     remove(_notes[0]);
                     _notes.remove(_notes[0]);
                     _letters.remove(_letters[0]);
@@ -141,35 +171,82 @@ class PlayState2 extends FlxState
                     _txtPun.text = "Score: " + Std.string(puntuacion);
                 }
                 else if (FlxG.keys.anyJustPressed(["F"]) && _letters[0]=="F") {
+                    _F.play();
                     remove(_notes[0]);
                     _notes.remove(_notes[0]);
                     _letters.remove(_letters[0]);
                     puntuacion += 1;
                     _txtPun.text = "Score: " + Std.string(puntuacion);
                 }
+                else if (FlxG.keys.anyJustPressed(["A"]) && _letters[0]!="A") {
+                    _bad.play();
+                    remove(_notes[0]);
+                    _notes.remove(_notes[0]);
+                    _letters.remove(_letters[0]);
+                    puntuacion -= 1;
+                    _vida -= 1;
+                    _txtPun.text = "Score: " + Std.string(puntuacion);
+                }
+                else if (FlxG.keys.anyJustPressed(["S"]) && _letters[0]!="S") {
+                    _bad.play();
+                    remove(_notes[0]);
+                    _notes.remove(_notes[0]);
+                    _letters.remove(_letters[0]);
+                    puntuacion -= 1;
+                    _vida -= 1;
+                    _txtPun.text = "Score: " + Std.string(puntuacion);
+                }
+                else if (FlxG.keys.anyJustPressed(["D"]) && _letters[0]!="D") {
+                    _bad.play();
+                    remove(_notes[0]);
+                    _notes.remove(_notes[0]);
+                    _letters.remove(_letters[0]);
+                    puntuacion -= 1;
+                    _vida -= 1;
+                    _txtPun.text = "Score: " + Std.string(puntuacion);
+                }
+                else if (FlxG.keys.anyJustPressed(["F"]) && _letters[0]!="F") {
+                    _bad.play();
+                    remove(_notes[0]);
+                    _notes.remove(_notes[0]);
+                    _letters.remove(_letters[0]);
+                    puntuacion -= 1;
+                    _vida -= 1;
+                    _txtPun.text = "Score: " + Std.string(puntuacion);
+                }
+            }
+            else {
+                if (FlxG.keys.anyJustPressed(["A"])) {
+                    _bad.play();
+                    puntuacion -= 1;
+                    _vida -= 1;
+                    _txtPun.text = "Score: " + Std.string(puntuacion);
+                }
+                else if (FlxG.keys.anyJustPressed(["S"])) {
+                    _bad.play();
+                    puntuacion -= 1;
+                    _vida -= 1;
+                    _txtPun.text = "Score: " + Std.string(puntuacion);
+                }
+                else if (FlxG.keys.anyJustPressed(["D"])) {
+                    _bad.play();
+                    puntuacion -= 1;
+                    _vida -= 1;
+                    _txtPun.text = "Score: " + Std.string(puntuacion);
+                }
+                else if (FlxG.keys.anyJustPressed(["F"])) {
+                    _bad.play();
+                    puntuacion -= 1;
+                    _vida -= 1;
+                    _txtPun.text = "Score: " + Std.string(puntuacion);
+                }
             }
 
-            // /*Movimiento agua*/
-            
-            // if (_waterMov==0) {
-            //     _water.y += 1;
-            //     _pj.y += 1;
-            //     _waterDes += 1;
-            //     if (_waterDes==30) {
-            //         _waterMov = 1;
-            //     }
-                
-            // }else{
-            //     _water.y -= 1;
-            //     _pj.y -= 1;
-            //     _waterDes -= 1;
-            //     if (_waterDes==0) {
-            //         _waterMov = 0;
-            //     }
-            // }
-
-            if (puntuacion > 200) {
+            if (puntuacion >= 15) {
                 FlxG.switchState(new WinState2());
+            }
+            else if (_vida <= 0) {
+                FlxG.switchState(new LoseState2());
             }
         }
         
