@@ -16,17 +16,18 @@ class MenuState extends FlxState
 	 * Function that is called up when to state is created to set it up. 
 	 */
 	
-	var _txt : FlxText;
+	var _bg : FlxSprite;
 	var _btnPlay : FlxButton;
 	
 	override public function create():Void
 	{
 		super.create();
+
+		_bg = new FlxSprite(0, 0);
+		_bg.loadGraphic("assets/images/Intro.png");
+		add(_bg);
 		
-		_txt = new FlxText(FlxG.width/2,FlxG.height/2,0,"Redneck Olympics",12);
-		add(_txt);
-		
-		_btnPlay = new FlxButton(FlxG.width/2,FlxG.height/2+_txt.height*2,"Start Game",playGame);
+		_btnPlay = new FlxButton(430,297,"Start Game",playGame);
 		add(_btnPlay);
 	}
 	
