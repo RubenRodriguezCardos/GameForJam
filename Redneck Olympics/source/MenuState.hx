@@ -54,7 +54,7 @@ class MenuState extends FlxState
 	}
 	
 	public function playGame() {
-			FlxG.switchState(new PlayState1());
+			FlxG.switchState(new PlayState2());
 	
 	}
 }

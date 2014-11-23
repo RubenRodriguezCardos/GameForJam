@@ -23,13 +23,9 @@ class PlayState2 extends FlxState
     
     var _bg : FlxSprite;
     var _inst : FlxSprite;
-    var _water : FlxSprite;
-    var _waterMov: Int =0;
-    var _waterDes : Int = 0;
-    var _pj : FlxSprite;/*150x100*/
-    var _lasers : Array<FlxSprite> = [];
-    var _enemies : Array<FlxSprite> = [];
-    var _bgMusic : FlxSound;
+    var _box : FlxSprite;
+    var _notes : Array<FlxSprite> = [];
+    var _letters : Array<String> = [];
     var speed : Int = -2; 
     var puntuacion: Int = 0;
     var _txtPun :FlxText;
@@ -42,9 +38,13 @@ class PlayState2 extends FlxState
         _bg = new FlxSprite(0, 0);
         _bg.loadGraphic("assets/images/Fondo2.png");
         add(_bg);
+
+        _box = new FlxSprite (37, 396);
+        _box.makeGraphic(66,60,FlxColor.TRANSPARENT);
+        add(_box);
         
         _txtPun = new FlxText(0,0,0,"Score: "+Std.string(puntuacion),12);
-        _txtPun.color = 0xFFFFFF;
+        _txtPun.color = 0x000000;
         add(_txtPun);
 
         _inst = new FlxSprite(0, 0);
@@ -76,71 +76,79 @@ class PlayState2 extends FlxState
             }
         }
         else {
-            /*Laseres*/
+
+            var prob = Std.random(400);
+            if (prob == 0) {
+                var note = new FlxSprite(552,396);
+                note.loadGraphic("assets/images/TeclaA2.png");
+                note.acceleration.x = -50;
+                add(note);
+                _notes.push(note);
+                _letters.push("A");
+            }
+            else if (prob == 100) {
+                var note = new FlxSprite(552,396);
+                note.loadGraphic("assets/images/TeclaS2.png");
+                note.acceleration.x = -50;
+                add(note);
+                _notes.push(note);
+                _letters.push("S");
+            }
+            else if (prob == 200) {
+                var note = new FlxSprite(552,396);
+                note.loadGraphic("assets/images/TeclaD2.png");
+                note.acceleration.x = -50;
+                add(note);
+                _notes.push(note);
+                _letters.push("D");
+            }
+            else if (prob == 300) {
+                var note = new FlxSprite(552,396);
+                note.loadGraphic("assets/images/TeclaF2.png");
+                note.acceleration.x = -50;
+                add(note);
+                _notes.push(note);
+                _letters.push("F");
+            }
+        
+            /*Movimiento notas*/
             
-            // if (FlxG.keys.anyJustPressed(["SPACE"])) {/*Disparo un laser*/
-            //     var _laser = new FlxSprite(_pj.x + _pj.width / 2 + _pj.width / 4, _pj.y + _pj.height/4);/*creo el sprite*/
-            //     _laser.makeGraphic(50,2,FlxColor.FOREST_GREEN);/*Cargo el grafico*/
-            //     add(_laser);/*Lo añado*/
-            //     _lasers.push(_laser);/*lo añado al array*/
-            // }
-            
-            // /*Movimiento laseres*/
-            
-            // for (_aux  in _lasers) {
-            //     _aux.velocity.x = 500;
-            //     if (!_aux.isOnScreen()) {
-            //         remove(_aux);
-            //         _lasers.remove(_aux);
-            //     }
+            // for (_aux  in _notes) {
+            //     _aux.velocity.x = -60;
             // }
 
-            // /*Enemigos*/
-            
-            // var prob = Std.random(200);
-            // if (prob>=170) {
-            //     var enemy = new FlxSprite(FlxG.height/2+FlxG.height/3+Std.random(200),FlxG.height-FlxG.height/4);
-            //     enemy.loadGraphic("assets/images/Malo1.png");
-            //     enemy.acceleration.x = -20;
-            //     enemy.velocity.y = -50;
-            //     add(enemy);
-            //     _enemies.push(enemy);
-            // }
-            
-            // /*Movimiento enemigos*/
-            
-            // for (_aux  in _enemies) {
-            //     if (_aux.x < FlxG.height/2) {
-            //         _aux.velocity.y = Math.sin(_aux.x) ;
-            //     }
-            // }
-            
-            // /*Colision laser y enemigos*/
-            
-            // for (las in _lasers) {
-                
-            //     for ( en in _enemies) {
-                    
-            //         if (FlxG.collide(las,en)) {
-            //             remove(en);
-            //             remove(las);
-            //             _lasers.remove(las);
-            //             _enemies.remove(en);
-            //             puntuacion += 1;
-            //             _txtPun.text = "Score: " + Std.string(puntuacion);
-            //         }
-                    
-            //     }
-                
-            // }
+            /*Colision notas y aciertos*/
+            if (FlxG.overlap(_box, _notes[0])) {
+                if (FlxG.keys.anyJustPressed(["A"]) && _letters[0]=="A") {
+                    remove(_notes[0]);
+                    _notes.remove(_notes[0]);
+                    _letters.remove(_letters[0]);
+                    puntuacion += 1;
+                    _txtPun.text = "Score: " + Std.string(puntuacion);
+                }
+                else  if (FlxG.keys.anyJustPressed(["S"]) && _letters[0]=="S") {
+                    remove(_notes[0]);
+                    _notes.remove(_notes[0]);
+                    _letters.remove(_letters[0]);
+                    puntuacion += 1;
+                    _txtPun.text = "Score: " + Std.string(puntuacion);
+                }
+                else  if (FlxG.keys.anyJustPressed(["D"]) && _letters[0]=="D") {
+                    remove(_notes[0]);
+                    _notes.remove(_notes[0]);
+                    _letters.remove(_letters[0]);
+                    puntuacion += 1;
+                    _txtPun.text = "Score: " + Std.string(puntuacion);
+                }
+                else if (FlxG.keys.anyJustPressed(["F"]) && _letters[0]=="F") {
+                    remove(_notes[0]);
+                    _notes.remove(_notes[0]);
+                    _letters.remove(_letters[0]);
+                    puntuacion += 1;
+                    _txtPun.text = "Score: " + Std.string(puntuacion);
+                }
+            }
 
-            // /*Colision enemigos y personaje*/
-            // for (en in _enemies) {
-            //     if (FlxG.collide(_pj,en)) {
-            //         FlxG.switchState(new LoseState1());
-            //     }
-            // }
-            
             // /*Movimiento agua*/
             
             // if (_waterMov==0) {
