@@ -11,7 +11,7 @@ import flixel.system.FlxSound;
 /**
  * A FlxState which can be used for the game's menu.
  */
-class LoseState1 extends FlxState
+class LoseState2 extends FlxState
 {
     /**
      * Function that is called up when to state is created to set it up. 
@@ -25,7 +25,7 @@ class LoseState1 extends FlxState
         super.create();
 
         _bg = new FlxSprite(0, 0);
-        _bg.loadGraphic("assets/images/Lose1.png");
+        _bg.loadGraphic("assets/images/Lose2.png");
         add(_bg);
 
         _bgMusic = FlxG.sound.load("assets/music/Menu.mp3");
